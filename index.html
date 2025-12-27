@@ -1,0 +1,3142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINGUASPHERE | Where Fluency Meets Prestige</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="Images/Blue and Black Minimalist Brand Logo.png" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #1A365D;
+            --secondary: #00A3FF;
+            --accent: #7C3AED;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --light: #FFFFFF;
+            --dark: #0F172A;
+            --gray: #94A3B8;
+            --gradient-dark: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --gradient-secondary: linear-gradient(135deg, #00A3FF 0%, #7C3AED 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --border-radius-sm: 12px;
+            --border-radius-md: 16px;
+            --border-radius-xs: 8px;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            --glow: 0 0 20px rgba(0, 163, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gradient-dark);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes modalFadeOut {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(-50px) scale(0.95); }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: var(--border-radius-sm);
+            background: var(--dark);
+            border-left: 4px solid var(--secondary);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            max-width: 400px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+        }
+
+        .notification.error {
+            border-left-color: var(--error);
+        }
+
+        .notification.info {
+            border-left-color: var(--secondary);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        .notification i {
+            font-size: 1.2rem;
+        }
+
+        .notification.success i {
+            color: var(--success);
+        }
+
+        .notification.error i {
+            color: var(--error);
+        }
+
+        .notification.info i {
+            color: var(--secondary);
+        }
+
+        .notification.warning i {
+            color: var(--warning);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 32px;
+            border-radius: var(--border-radius-xs);
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: var(--gradient-secondary);
+            color: var(--light);
+            box-shadow: 0 4px 15px rgba(0, 163, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(0, 163, 255, 0.4);
+            background: linear-gradient(135deg, #0099FF 0%, #6D28D9 100%);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 163, 255, 0.1);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--light);
+        }
+
+        .btn-lg {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+
+        /* Header */
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 0;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 700;
+            font-size: 24px;
+            font-family: 'Manrope', sans-serif;
+        }
+        /* School Logo - 500x500px */
+.school-logo {
+    height: 40px;
+    width: 40px;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-right: 12px;
+    display: block;
+}
+
+        nav ul {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            position: relative;
+            padding: 8px 0;
+            transition: var(--transition);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-secondary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--secondary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 200px 0 100px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(0, 163, 255, 0.1) 0%, transparent 50%),
+                      radial-gradient(circle at 70% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 163, 255, 0.1);
+            color: var(--secondary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 163, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--gray);
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .language-globe {
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+
+        .globe-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 163, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 3s infinite;
+        }
+
+        .globe-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .globe {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, #1E293B 0%, #0F172A 70%);
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            box-shadow: inset 0 0 50px rgba(0, 163, 255, 0.2),
+                        0 0 50px rgba(0, 163, 255, 0.1);
+        }
+
+        .globe::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, transparent 30%, rgba(0, 163, 255, 0.1) 50%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            border-radius: 50%;
+        }
+
+        .language-marker {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            animation: bounce 4s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.2s);
+        }
+
+        .language-marker:hover {
+            transform: scale(1.2);
+            border-color: var(--secondary);
+            background: rgba(0, 163, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 163, 255, 0.5);
+        }
+
+        .language-marker span {
+            font-size: 10px;
+            opacity: 0;
+            position: absolute;
+            top: -25px;
+            background: var(--dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+        }
+
+        .language-marker:hover span {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        /* Sections Common */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Languages Grid */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .language-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            cursor: pointer;
+            animation: fadeIn 0.6s ease-out;
+            animation-delay: calc(var(--i) * 0.1s);
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .language-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: var(--glow);
+        }
+
+        .language-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .language-icon {
+            font-size: 2.5rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .language-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .language-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .teacher-photo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .language-levels {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .level-tag {
+            background: rgba(0, 163, 255, 0.1);
+            color: var(--secondary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 163, 255, 0.2);
+        }
+
+        .language-stats {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .language-enroll-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--success);
+            color: var(--light);
+            border: none;
+            border-radius: var(--border-radius-xs);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .language-enroll-btn:hover {
+            background: #0da369;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Language Details Modal */
+        .language-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10004;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .language-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .language-content {
+            background: var(--gradient-dark);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .language-modal.active .language-content {
+            animation: modalFadeIn 0.4s ease-out;
+        }
+
+        .language-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 10005;
+        }
+
+        .language-close:hover {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .language-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .language-modal-icon {
+            font-size: 3rem;
+        }
+
+        .language-modal-title {
+            flex: 1;
+        }
+
+        .language-modal-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .language-modal-title p {
+            color: var(--gray);
+        }
+
+        .language-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-sm);
+            padding: 25px;
+        }
+
+        .detail-card h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .detail-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .teacher-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .teacher-photo-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+            box-shadow: 0 6px 20px rgba(0, 163, 255, 0.3);
+        }
+
+        .teacher-details h4 {
+            color: var(--light);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+
+        .teacher-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .course-structure ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .course-structure li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+
+        .course-structure i {
+            color: var(--success);
+        }
+
+        .language-modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .pricing-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-filter {
+            padding: 12px 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            color: var(--gray);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .pricing-filter:hover,
+        .pricing-filter.active {
+            background: var(--gradient-secondary);
+            color: var(--light);
+            border-color: var(--secondary);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 40px 30px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: var(--glow);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--gradient-secondary);
+            color: var(--light);
+            padding: 8px 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .pricing-language {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+
+        .pricing-level {
+            font-size: 1.8rem;
+            color: var(--light);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .pricing-period {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            color: var(--light);
+        }
+
+        .pricing-features i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .pricing-certificate {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .pricing-actions {
+            text-align: center;
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10002;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .payment-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .payment-content {
+            background: var(--gradient-dark);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .payment-modal.active .payment-content {
+            animation: modalFadeIn 0.4s ease-out;
+        }
+
+        .payment-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 10003;
+        }
+
+        .payment-close:hover {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .payment-header h2 {
+            color: var(--light);
+            margin-bottom: 10px;
+        }
+
+        .payment-header p {
+            color: var(--gray);
+        }
+
+        .payment-summary {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-sm);
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .summary-item.total {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .payment-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-xs);
+            color: var(--light);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(0, 163, 255, 0.1);
+        }
+
+        .payment-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* Receipt Modal */
+        .receipt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10003;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .receipt-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .receipt-content {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            color: var(--dark);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--gray);
+        }
+
+        .receipt-header h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .receipt-details {
+            margin-bottom: 30px;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .receipt-item.total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            border-top: 2px solid var(--primary);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .receipt-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .login-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .login-modal.closing {
+            animation: fadeIn 0.3s ease-out reverse;
+        }
+
+        .login-content {
+            background: var(--gradient-dark);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-modal.active .login-content {
+            animation: modalFadeIn 0.4s ease-out;
+        }
+
+        .login-modal.closing .login-content {
+            animation: modalFadeOut 0.4s ease-out;
+        }
+
+        .login-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 10002;
+        }
+
+        .login-close:hover {
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: var(--light);
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: var(--gray);
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid var(--glass-border);
+            padding: 60px 0 30px;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--light);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--gradient-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 163, 255, 0.3);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--gray);
+        }
+
+        .footer-bottom p {
+            margin-bottom: 10px;
+        }
+
+        /* Demo Login Button */
+        .demo-login {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10004;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--glass-border);
+            border-top: 3px solid var(--secondary);
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            color: var(--light);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-visual {
+                order: -1;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .language-globe {
+                width: 400px;
+                height: 400px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+
+            .pricing-card.popular:hover {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .language-globe {
+                width: 300px;
+                height: 300px;
+            }
+
+            .language-marker {
+                width: 50px;
+                height: 50px;
+                font-size: 12px;
+            }
+
+            .languages-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-form {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-actions {
+                flex-direction: column;
+            }
+
+            .receipt-actions {
+                flex-direction: column;
+            }
+
+            .language-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .language-modal-actions {
+                flex-direction: column;
+            }
+
+            .notification {
+                left: 20px;
+                right: 20px;
+                max-width: calc(100% - 40px);
+            }
+
+            .teacher-photo-large {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 150px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card {
+                padding: 30px 20px;
+            }
+
+            .language-content {
+                padding: 20px;
+            }
+
+            .teacher-photo-large {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0099FF;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Language Actions */
+.language-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.language-actions .btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-size: 14px;
+}
+
+.language-actions .btn-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+/* Language Actions */
+.language-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.language-actions .btn {
+    flex: 1;
+    padding: 10px 16px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.language-actions .btn-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.language-actions .btn-outline {
+    background: transparent;
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+
+.language-actions .btn-outline:hover {
+    background: rgba(0, 163, 255, 0.1);
+}
+
+.language-actions .btn-success {
+    background: var(--success);
+    color: var(--light);
+    border: none;
+}
+
+.language-actions .btn-success:hover {
+    background: #0da369;
+}
+    </style>
+</head>
+<body>
+    <!-- Demo Login Button -->
+    <div class="demo-login" style="display: none;">
+        <button onclick="demoLogin()" class="btn btn-primary" style="padding: 12px 20px;">
+            <i class="fas fa-bolt"></i> Quick Demo
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo" onclick="scrollToTop(); return false;">
+    <!-- School Logo -->
+    <img src="Images/Blue and Black Minimalist Brand Logo.png" alt="LINGUASPHERE Academy Logo" class="school-logo">
+    <!-- Keep the animated icon (optional) -->
+    <div class="logo-icon"></div>
+    <span class="logo-text">LINGUASPHERE</span>
+</a>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="active">Home</a></li>
+                        <li><a href="#languages">Languages</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#" onclick="showDashboard(); return false;">Dashboard</a></li>
+                        <li><a href="enroll.html">Get Started</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <button class="btn btn-outline" onclick="window.location.href='enroll.html'">
+                        <i class="fas fa-user-plus"></i> Get Started
+                    </button>
+                    <button class="btn btn-primary" onclick="scrollToPricing()">
+                        <i class="fas fa-tags"></i> View Pricing
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <i class="fas fa-award"></i>
+                        <span>ACCREDITED LANGUAGE CERTIFICATION</span>
+                    </div>
+                    
+                    <h1>Master 10 Languages from <span>A1 to C2</span></h1>
+                    <p>LINGUASPHERE ACADEMY provides professional language certification in 10 global languages. Achieve fluency through our structured curriculum, expert tutors, and CEFR-aligned certification programs.</p>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="scrollToPricing()">
+                            <i class="fas fa-tags"></i>
+                            View Pricing
+                        </button>
+                        <button class="btn btn-outline" onclick="showDashboard()">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Go to Dashboard
+                        </button>
+                        <button class="btn btn-success" onclick="window.location.href='enroll.html'">
+                            <i class="fas fa-shopping-cart"></i> Enroll Now
+                        </button>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">Languages</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">CEFR Levels</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="language-globe">
+                        <div class="globe-glow"></div>
+                        <div class="globe-container">
+                            <div class="globe"></div>
+                            <div class="language-marker" style="top: 20%; left: 25%; --i: 0" onclick="enrollFromGlobe('EN')">
+                                EN
+                                <span>English</span>
+                            </div>
+                            <div class="language-marker" style="top: 30%; right: 20%; --i: 1" onclick="enrollFromGlobe('ES')">
+                                ES
+                                <span>Spanish</span>
+                            </div>
+                            <div class="language-marker" style="bottom: 25%; right: 30%; --i: 2" onclick="enrollFromGlobe('FR')">
+                                FR
+                                <span>French</span>
+                            </div>
+                            <div class="language-marker" style="bottom: 20%; left: 30%; --i: 3" onclick="enrollFromGlobe('DE')">
+                                DE
+                                <span>German</span>
+                            </div>
+                            <div class="language-marker" style="top: 50%; left: 10%; --i: 4" onclick="enrollFromGlobe('IT')">
+                                IT
+                                <span>Italian</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section class="languages-section" id="languages">
+        <div class="container">
+            <div class="section-header">
+                <h2>10 Global Languages</h2>
+                <p>Master any of these languages from beginner to advanced levels with our CEFR-aligned certification programs.</p>
+            </div>
+            
+            <div class="languages-grid" id="languagesGrid">
+                <!-- Languages will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Language Course Pricing</h2>
+                <p>Choose your language and level. All courses include official CEFR certification.</p>
+            </div>
+            
+            <div class="pricing-filters" id="pricingFilters">
+                <button class="pricing-filter active" onclick="filterPricing('all')">All Languages</button>
+                <!-- Language filters will be populated by JavaScript -->
+            </div>
+            
+            <div class="pricing-grid" id="pricingGrid">
+                <!-- Pricing cards will be populated by JavaScript -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn btn-primary btn-lg" onclick="showHelpChoosing()">
+                    <i class="fas fa-question-circle"></i> Need Help Choosing?
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LINGUASPHERE</h3>
+                    <p>Professional language certification in 10 global languages. Achieve fluency through structured curriculum and CEFR-aligned certification programs.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/linguasphere.academy/" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#languages">Languages</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#" onclick="showDashboard(); return false;">Dashboard</a></li>
+                        <li><a href="enroll.html">Get Started</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Languages</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="enrollFromFooter('EN')">English 🇬🇧</a></li>
+                        <li><a href="#" onclick="enrollFromFooter('ES')">Spanish 🇪🇸</a></li>
+                        <li><a href="#" onclick="enrollFromFooter('FR')">French 🇫🇷</a></li>
+                        <li><a href="#" onclick="enrollFromFooter('DE')">German 🇩🇪</a></li>
+                        <li><a href="#" onclick="enrollFromFooter('IT')">Italian 🇮🇹</a></li>
+                        <li><a href="enroll.html">More Languages</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope" style="margin-right: 10px; color: var(--secondary);"></i> info@linguasphereacademy.com</p>
+                    <p><i class="fas fa-phone" style="margin-right: 10px; color: var(--secondary);"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt" style="margin-right: 10px; color: var(--secondary);"></i> 123 Language Street, Global City</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 LINGUASPHERE ACADEMY. All rights reserved.</p>
+                <p>Professional Language Certification A1-C2 | CEFR Accredited</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal" style="display: none;">
+        <div class="login-content">
+            <button class="login-close" onclick="closeLoginModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="login-header">
+                <h2>Welcome Back</h2>
+                <p>Sign in to access your language courses and dashboard</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="student@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <label style="display: flex; align-items: center; gap: 8px; color: var(--gray);">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" style="color: var(--secondary); text-decoration: none;">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                
+                <div style="text-align: center; margin-top: 20px; color: var(--gray);">
+                    Don't have an account? 
+                    <button type="button" onclick="window.location.href='enroll.html'" style="color: var(--secondary); background: none; border: none; cursor: pointer; font-weight: 600;">
+                        Enroll Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Language Details Modal -->
+    <div class="language-modal" id="languageModal">
+        <div class="language-content">
+            <button class="language-close" onclick="closeLanguageModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="language-modal-header">
+                <div class="language-modal-icon" id="languageModalIcon"></div>
+                <div class="language-modal-title">
+                    <h2 id="languageModalTitle"></h2>
+                    <p id="languageModalSubtitle"></p>
+                </div>
+            </div>
+            
+            <div class="language-details-grid">
+                <div class="detail-card">
+                    <h3>Course Description</h3>
+                    <p id="languageDescription"></p>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>Expert Teacher</h3>
+                    <div class="teacher-info" id="teacherInfo"></div>
+                </div>
+                
+                <div class="detail-card">
+                    <h3>How You'll Study</h3>
+                    <div class="course-structure">
+                        <ul id="studyMethod"></ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="language-modal-actions">
+                <button class="btn btn-outline" onclick="closeLanguageModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <button class="btn btn-success" onclick="enrollFromLanguageModal()">
+                    <i class="fas fa-shopping-cart"></i> Go to Enrollment Page
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <button class="payment-close" onclick="closePaymentModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="payment-header">
+                <h2>Complete Your Enrollment</h2>
+                <p>Fill in your details to enroll in the course</p>
+            </div>
+            
+            <div class="payment-summary" id="paymentSummary">
+                <!-- Payment summary will be populated by JavaScript -->
+            </div>
+            
+            <form class="payment-form" id="paymentForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" class="form-control" placeholder="john.doe@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="+1 (555) 123-4567" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Country *</label>
+                    <select id="country" class="form-control" required>
+                        <option value="">Select Country</option>
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="ES">Spain</option>
+                        <option value="IT">Italy</option>
+                        <option value="JP">Japan</option>
+                        <option value="KR">South Korea</option>
+                        <option value="IN">India</option>
+                        <option value="BR">Brazil</option>
+                        <option value="MX">Mexico</option>
+                        <option value="SA">Saudi Arabia</option>
+                        <option value="AE">United Arab Emirates</option>
+                        <option value="ZA">South Africa</option>
+                    </select>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="address">Address *</label>
+                    <input type="text" id="address" class="form-control" placeholder="123 Main Street, City, State, ZIP" required>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Payment Method *</label>
+                    <div style="display: flex; gap: 20px; margin-top: 10px;">
+                        <label style="display: flex; align-items: center; gap: 8px; color: var(--light);">
+                            <input type="radio" name="paymentMethod" value="credit" checked>
+                            <i class="fab fa-cc-visa"></i> Credit Card
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; color: var(--light);">
+                            <input type="radio" name="paymentMethod" value="paypal">
+                            <i class="fab fa-cc-paypal"></i> PayPal
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; color: var(--light);">
+                            <input type="radio" name="paymentMethod" value="bank">
+                            <i class="fas fa-university"></i> Bank Transfer
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width" id="creditCardFields">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <label for="cardNumber">Card Number *</label>
+                            <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div>
+                            <label for="cardName">Name on Card *</label>
+                            <input type="text" id="cardName" class="form-control" placeholder="JOHN DOE">
+                        </div>
+                        <div>
+                            <label for="expiry">Expiry Date *</label>
+                            <input type="text" id="expiry" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div>
+                            <label for="cvv">CVV *</label>
+                            <input type="text" id="cvv" class="form-control" placeholder="123">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label style="display: flex; align-items: center; gap: 8px; color: var(--light);">
+                        <input type="checkbox" id="terms" required>
+                        <span>I agree to the <a href="#" style="color: var(--secondary);">Terms and Conditions</a> and <a href="#" style="color: var(--secondary);">Privacy Policy</a></span>
+                    </label>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label style="display: flex; align-items: center; gap: 8px; color: var(--light);">
+                        <input type="checkbox" id="newsletter" checked>
+                        <span>Send me updates about new courses and promotions</span>
+                    </label>
+                </div>
+            </form>
+            
+            <div class="payment-actions">
+                <button class="btn btn-outline" onclick="closePaymentModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-primary" onclick="goToEnrollPage()">
+                    <i class="fas fa-shopping-cart"></i> Go to Enrollment Page
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="receipt-modal" id="receiptModal">
+        <div class="receipt-content">
+            <div class="receipt-header">
+                <h2><i class="fas fa-check-circle" style="color: var(--success); margin-right: 10px;"></i> Payment Successful!</h2>
+                <p>Your enrollment has been confirmed. Below is your receipt.</p>
+            </div>
+            
+            <div class="receipt-details" id="receiptDetails">
+                <!-- Receipt details will be populated by JavaScript -->
+            </div>
+            
+            <div class="receipt-actions">
+                <button class="btn btn-outline" onclick="closeReceiptModal()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <button class="btn btn-primary" onclick="downloadReceipt()">
+                    <i class="fas fa-download"></i> Download Receipt
+                </button>
+                <button class="btn btn-success" onclick="goToDashboardAfterPayment()">
+                    <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div style="text-align: center;">
+            <div class="loading-spinner"></div>
+            <div class="loading-text" id="loadingText">Processing...</div>
+        </div>
+    </div>
+
+    <!-- Hidden div for PDF generation -->
+    <div id="pdfReceipt" style="position: absolute; left: -9999px; top: -9999px; width: 210mm; min-height: 297mm; padding: 20mm; background: white; color: black; font-family: Arial, sans-serif;">
+        <!-- PDF content will be generated here -->
+    </div>
+
+    <script>
+        // Teacher photos data
+        const teacherPhotos = {
+            'EN': 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'ES': 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'FR': 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'DE': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'IT': 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'PT': 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'RU': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'JA': 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'KO': 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+            'AR': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
+        };
+
+        // User Management Functions - Modified for direct enrollment
+        function isLoggedIn() {
+            return localStorage.getItem('polyglotUser') !== null;
+        }
+
+        function getCurrentUser() {
+            const user = localStorage.getItem('polyglotUser');
+            return user ? JSON.parse(user) : null;
+        }
+
+        function demoLogin() {
+            // Just redirect to enroll page
+            showNotification('Redirecting to enrollment page...', 'success');
+            setTimeout(() => {
+                window.location.href = 'enroll.html';
+            }, 1000);
+        }
+
+        // Language descriptions and details
+        const languageDetails = {
+            'EN': {
+                description: 'English is the world\'s most widely spoken language, essential for global business, travel, and academic pursuits. Our English certification program follows CEFR standards from A1 (Beginner) to C2 (Proficiency).',
+                teacher: {
+                    name: 'Prof. Sarah Johnson',
+                    credentials: 'MA in Applied Linguistics, 15+ years teaching experience, Cambridge certified',
+                    avatar: 'SJ',
+                    photo: teacherPhotos.EN
+                },
+                studyMethod: [
+                    'Interactive video lessons with native speakers',
+                    'Weekly live conversation practice',
+                    'Personalized feedback on writing assignments',
+                    'Access to authentic materials (news, films, podcasts)',
+                    'Monthly progress assessments'
+                ]
+            },
+            'ES': {
+                description: 'Spanish is spoken by over 500 million people worldwide. Our program focuses on both European and Latin American Spanish, preparing you for real-world communication.',
+                teacher: {
+                    name: 'Prof. Carlos Mendoza',
+                    credentials: 'PhD in Hispanic Studies, Born and raised in Madrid, DELE examiner',
+                    avatar: 'CM',
+                    photo: teacherPhotos.ES
+                },
+                studyMethod: [
+                    'Cultural immersion through Spanish media',
+                    'Grammar workshops with practical exercises',
+                    'One-on-one conversation practice',
+                    'Focus on accent reduction',
+                    'Business Spanish modules available'
+                ]
+            },
+            'FR': {
+                description: 'French is the language of diplomacy, culture, and cuisine. Our program emphasizes proper pronunciation and cultural context for authentic communication.',
+                teacher: {
+                    name: 'Prof. Marie Dubois',
+                    credentials: 'MA in French Literature, Former UN interpreter, DALF certified',
+                    avatar: 'MD',
+                    photo: teacherPhotos.FR
+                },
+                studyMethod: [
+                    'Phonetics and pronunciation drills',
+                    'French cinema and literature analysis',
+                    'Role-playing real-life scenarios',
+                    'Focus on formal vs. informal register',
+                    'Preparation for DELF/DALF exams'
+                ]
+            },
+            'DE': {
+                description: 'German is Europe\'s most spoken native language and key for business in the EU. Our structured approach makes mastering German grammar accessible.',
+                teacher: {
+                    name: 'Prof. Klaus Weber',
+                    credentials: 'PhD in German Linguistics, Goethe-Institut certified, TestDaF examiner',
+                    avatar: 'KW',
+                    photo: teacherPhotos.DE
+                },
+                studyMethod: [
+                    'Systematic grammar building blocks',
+                    'Technical German for professionals',
+                    'Case system mastery exercises',
+                    'Business communication practice',
+                    'TestDaF exam preparation'
+                ]
+            },
+            'IT': {
+                description: 'Italian is the language of art, music, and history. Learn to communicate with elegance and authenticity while appreciating Italian culture.',
+                teacher: {
+                    name: 'Prof. Sofia Rossi',
+                    credentials: 'MA in Italian Studies, Florentine native speaker, CELI certified',
+                    avatar: 'SR',
+                    photo: teacherPhotos.IT
+                },
+                studyMethod: [
+                    'Music-based learning (opera, pop)',
+                    'Art and history vocabulary building',
+                    'Gesture and body language integration',
+                    'Regional dialect awareness',
+                    'Cooking and culture workshops'
+                ]
+            },
+            'PT': {
+                description: 'Portuguese connects you to Brazil, Portugal, and growing global markets. Learn both European and Brazilian variations.',
+                teacher: {
+                    name: 'Prof. Antonio Silva',
+                    credentials: 'Native Brazilian, Certified CELPE-Bras examiner, 12+ years teaching',
+                    avatar: 'AS',
+                    photo: teacherPhotos.PT
+                },
+                studyMethod: [
+                    'Brazilian and European Portuguese comparison',
+                    'Business Portuguese for professionals',
+                    'Cultural context through Brazilian literature',
+                    'Pronunciation and accent training',
+                    'Real-world conversation practice'
+                ]
+            },
+            'RU': {
+                description: 'Master the Cyrillic alphabet and Russian grammar with our specialized program focusing on reading, writing, and conversation.',
+                teacher: {
+                    name: 'Prof. Ivan Petrov',
+                    credentials: 'PhD in Slavic Languages, Moscow State University, TORFL examiner',
+                    avatar: 'IP',
+                    photo: teacherPhotos.RU
+                },
+                studyMethod: [
+                    'Cyrillic alphabet mastery in 2 weeks',
+                    'Russian grammar made simple approach',
+                    'Business Russian for trade professionals',
+                    'Russian literature and cinema analysis',
+                    'TORFL exam preparation'
+                ]
+            },
+            'JA': {
+                description: 'Learn Japanese characters (Hiragana, Katakana, Kanji) while mastering polite forms and business etiquette for Japanese communication.',
+                teacher: {
+                    name: 'Prof. Yuki Tanaka',
+                    credentials: 'JLPT N1 certified, 10+ years teaching experience, Kyoto University graduate',
+                    avatar: 'YT',
+                    photo: teacherPhotos.JA
+                },
+                studyMethod: [
+                    'Hiragana and Katakana in 3 weeks',
+                    'Progressive Kanji learning system',
+                    'Business Japanese and etiquette',
+                    'Anime and manga as learning tools',
+                    'JLPT exam preparation'
+                ]
+            },
+            'KO': {
+                description: 'Korean combines Hangul mastery with cultural understanding, perfect for K-pop fans, business professionals, and travelers.',
+                teacher: {
+                    name: 'Prof. Min-Ji Park',
+                    credentials: 'Seoul National University graduate, TOPIK examiner, K-pop culture expert',
+                    avatar: 'MP',
+                    photo: teacherPhotos.KO
+                },
+                studyMethod: [
+                    'Hangul mastery in 1 week',
+                    'K-drama and K-pop integrated learning',
+                    'Business Korean for professionals',
+                    'Korean cooking and culture workshops',
+                    'TOPIK exam preparation'
+                ]
+            },
+            'AR': {
+                description: 'Arabic opens doors to the Middle East and North Africa. Focus on Modern Standard Arabic with dialect awareness.',
+                teacher: {
+                    name: 'Prof. Khalid Al-Farsi',
+                    credentials: 'Quranic Arabic specialist, Media Arabic expert, Al-Azhar University graduate',
+                    avatar: 'KA',
+                    photo: teacherPhotos.AR
+                },
+                studyMethod: [
+                    'Arabic script mastery program',
+                    'Modern Standard Arabic focus',
+                    'Regional dialect introduction',
+                    'Business Arabic for professionals',
+                    'Quranic Arabic optional modules'
+                ]
+            }
+        };
+
+        // Languages data
+        const languages = [
+            { code: 'EN', name: 'English', icon: '🇬🇧', levels: 'A1-C2', students: '25K', completion: '98%' },
+            { code: 'ES', name: 'Spanish', icon: '🇪🇸', levels: 'A1-C2', students: '18K', completion: '96%' },
+            { code: 'FR', name: 'French', icon: '🇫🇷', levels: 'A1-C2', students: '15K', completion: '97%' },
+            { code: 'DE', name: 'German', icon: '🇩🇪', levels: 'A1-C2', students: '12K', completion: '95%' },
+            { code: 'IT', name: 'Italian', icon: '🇮🇹', levels: 'A1-C2', students: '10K', completion: '94%' },
+            { code: 'PT', name: 'Portuguese', icon: '🇵🇹', levels: 'A1-C2', students: '8K', completion: '93%' },
+            { code: 'RU', name: 'Russian', icon: '🇷🇺', levels: 'A1-C2', students: '7K', completion: '92%' },
+            { code: 'JA', name: 'Japanese', icon: '🇯🇵', levels: 'A1-C2', students: '6K', completion: '91%' },
+            { code: 'KO', name: 'Korean', icon: '🇰🇷', levels: 'A1-C2', students: '5K', completion: '90%' },
+            { code: 'AR', name: 'Arabic', icon: '🇸🇦', levels: 'A1-C2', students: '4K', completion: '89%' }
+        ];
+
+        // UPDATED: Simplified pricing data WITHOUT language levels
+        const pricingData = {
+            'EN': [
+                { level: 'Complete Language Program', price: 299, duration: '3 months', popular: true }
+            ],
+            'ES': [
+                { level: 'Complete Language Program', price: 279, duration: '3 months', popular: true }
+            ],
+            'FR': [
+                { level: 'Complete Language Program', price: 289, duration: '3 months', popular: true }
+            ],
+            'DE': [
+                { level: 'Complete Language Program', price: 299, duration: '3 months', popular: true }
+            ],
+            'IT': [
+                { level: 'Complete Language Program', price: 269, duration: '3 months', popular: true }
+            ],
+            'PT': [
+                { level: 'Complete Language Program', price: 259, duration: '3 months', popular: true }
+            ],
+            'RU': [
+                { level: 'Complete Language Program', price: 279, duration: '3 months', popular: true }
+            ],
+            'JA': [
+                { level: 'Complete Language Program', price: 319, duration: '3 months', popular: true }
+            ],
+            'KO': [
+                { level: 'Complete Language Program', price: 309, duration: '3 months', popular: true }
+            ],
+            'AR': [
+                { level: 'Complete Language Program', price: 289, duration: '3 months', popular: true }
+            ]
+        };
+
+        // Current selected course for payment
+        let currentCourse = null;
+        let currentLanguage = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLanguages();
+            loadPricing();
+            setupEventListeners();
+            
+            // Check if user is already logged in
+            if (isLoggedIn()) {
+                const user = getCurrentUser();
+                // Update UI to show logged in state
+                const loginBtn = document.querySelector('.btn-outline');
+                if (loginBtn) {
+                    loginBtn.innerHTML = `<i class="fas fa-user"></i> ${user.name}`;
+                }
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Update active nav
+                        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+            
+            // Set initial active nav
+            document.querySelector('nav a[href="#home"]').classList.add('active');
+            
+            // Setup payment method toggle
+            setupPaymentMethodToggle();
+        });
+
+        // Load languages dynamically
+function loadLanguages() {
+    const grid = document.getElementById('languagesGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    
+    languages.forEach((lang, index) => {
+        const details = languageDetails[lang.code];
+        const teacherPhoto = details?.teacher?.photo || teacherPhotos[lang.code] || 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80';
+        
+        const card = document.createElement('div');
+        card.className = 'language-card';
+        card.style.setProperty('--i', index);
+        card.innerHTML = `
+            <div class="language-header">
+                <div class="language-icon">${lang.icon}</div>
+                <div class="language-info">
+                    <h3>${lang.name}</h3>
+                    <p>${lang.code} Certification</p>
+                </div>
+                <img src="${teacherPhoto}" alt="${details?.teacher?.name || 'Teacher'}" class="teacher-photo" title="Expert Teacher">
+            </div>
+            <div class="language-levels">
+                <span class="level-tag">A1</span>
+                <span class="level-tag">A2</span>
+                <span class="level-tag">B1</span>
+                <span class="level-tag">B2</span>
+                <span class="level-tag">C1</span>
+                <span class="level-tag">C2</span>
+            </div>
+            <div class="language-stats">
+                <div class="stat">
+                    <div class="stat-value">${lang.students}</div>
+                    <div class="stat-label">Students</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">${lang.completion}</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="language-actions">
+                <button class="btn btn-outline btn-sm" onclick="showLanguageDetails('${lang.code}')">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </button>
+                <button class="btn btn-success btn-sm" onclick="enrollLanguage('${lang.code}', '${lang.name}', '${lang.icon}')">
+                    <i class="fas fa-shopping-cart"></i> Enroll Now
+                </button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+        // Direct enrollment function for language cards
+        function enrollLanguage(languageCode, languageName, languageIcon) {
+            // Store the selected language data for the enroll page
+            const languageData = {
+                code: languageCode,
+                name: languageName,
+                icon: languageIcon
+            };
+            
+            localStorage.setItem('selectedLanguage', JSON.stringify(languageData));
+            
+            // Redirect to enroll page
+            window.location.href = 'enroll.html';
+        }
+
+        // Enroll from globe markers
+        function enrollFromGlobe(languageCode) {
+            const language = languages.find(l => l.code === languageCode);
+            if (language) {
+                enrollLanguage(languageCode, language.name, language.icon);
+            }
+        }
+
+        // Enroll from footer links
+        function enrollFromFooter(languageCode) {
+            const language = languages.find(l => l.code === languageCode);
+            if (language) {
+                enrollLanguage(languageCode, language.name, language.icon);
+            }
+        }
+
+        // Show language details modal
+        function showLanguageDetails(languageCode) {
+            const language = languages.find(l => l.code === languageCode);
+            const details = languageDetails[languageCode] || {
+                description: `Learn ${language.name} from beginner to advanced levels. Our comprehensive program covers all language skills: speaking, listening, reading, and writing.`,
+                teacher: {
+                    name: 'Expert Native Teacher',
+                    credentials: 'Certified language instructor with years of experience',
+                    avatar: language.name.substring(0, 2),
+                    photo: teacherPhotos[languageCode] || 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
+                },
+                studyMethod: [
+                    'Interactive video lessons',
+                    'Live conversation practice',
+                    'Personalized feedback',
+                    'Progress tracking',
+                    'Certificate upon completion'
+                ]
+            };
+            
+            currentLanguage = language;
+            
+            // Update modal content
+            document.getElementById('languageModalIcon').textContent = language.icon;
+            document.getElementById('languageModalTitle').textContent = language.name;
+            document.getElementById('languageModalSubtitle').textContent = `${language.code} Certification | A1-C2 Levels`;
+            document.getElementById('languageDescription').textContent = details.description;
+            
+            // Update teacher info with photo
+            document.getElementById('teacherInfo').innerHTML = `
+                <img src="${details.teacher.photo}" alt="${details.teacher.name}" class="teacher-photo-large">
+                <div class="teacher-details">
+                    <h4>${details.teacher.name}</h4>
+                    <p>${details.teacher.credentials}</p>
+                </div>
+            `;
+            
+            // Update study method
+            const studyMethodList = document.getElementById('studyMethod');
+            studyMethodList.innerHTML = '';
+            details.studyMethod.forEach(method => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check"></i> ${method}`;
+                studyMethodList.appendChild(li);
+            });
+            
+            // Show modal
+            const modal = document.getElementById('languageModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close language modal
+        function closeLanguageModal() {
+            const modal = document.getElementById('languageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Enroll from language modal
+        function enrollFromLanguageModal() {
+            if (!currentLanguage) return;
+            
+            // Store the selected language data
+            const languageData = {
+                code: currentLanguage.code,
+                name: currentLanguage.name,
+                icon: currentLanguage.icon
+            };
+            
+            localStorage.setItem('selectedLanguage', JSON.stringify(languageData));
+            
+            // Close modal and redirect
+            closeLanguageModal();
+            window.location.href = 'enroll.html';
+        }
+
+        // Load pricing dynamically
+        function loadPricing() {
+            const filtersContainer = document.getElementById('pricingFilters');
+            const gridContainer = document.getElementById('pricingGrid');
+            
+            if (!filtersContainer || !gridContainer) return;
+            
+            // Create language filters
+            languages.forEach(lang => {
+                const filter = document.createElement('button');
+                filter.className = 'pricing-filter';
+                filter.textContent = lang.name;
+                filter.onclick = () => filterPricing(lang.code);
+                filtersContainer.appendChild(filter);
+            });
+            
+            // Load all pricing cards
+            renderPricingCards('all');
+        }
+
+        // Render pricing cards based on filter
+        function renderPricingCards(filter) {
+            const gridContainer = document.getElementById('pricingGrid');
+            if (!gridContainer) return;
+            
+            gridContainer.innerHTML = '';
+            
+            // Update active filter
+            document.querySelectorAll('.pricing-filter').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`.pricing-filter[onclick="filterPricing('${filter}')"]`)?.classList.add('active');
+            
+            let cardsAdded = 0;
+            
+            languages.forEach(lang => {
+                if (filter !== 'all' && filter !== lang.code) return;
+                
+                const prices = pricingData[lang.code] || [];
+                
+                prices.forEach((priceInfo, index) => {
+                    const card = document.createElement('div');
+                    card.className = `pricing-card ${priceInfo.popular ? 'popular' : ''}`;
+                    
+                    const popularBadge = priceInfo.popular ? 
+                        `<div class="popular-badge">Most Popular</div>` : '';
+                    
+                    card.innerHTML = `
+                        ${popularBadge}
+                        <div class="pricing-header">
+                            <div class="pricing-language">${lang.name} ${lang.icon}</div>
+                            <div class="pricing-price">$${priceInfo.price}</div>
+                            <div class="pricing-period">${priceInfo.duration} Course</div>
+                        </div>
+                        
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Complete A1-C2 Curriculum</li>
+                            <li><i class="fas fa-check"></i> 36 Interactive Lessons</li>
+                            <li><i class="fas fa-check"></i> Live Tutor Sessions</li>
+                            <li><i class="fas fa-check"></i> Practice Exercises</li>
+                            <li><i class="fas fa-check"></i> 24/7 Support</li>
+                        </ul>
+                        
+                        <div class="pricing-certificate">
+                            <i class="fas fa-award"></i>
+                            <span>Official CEFR Certificate Included</span>
+                        </div>
+                        
+                        <div class="pricing-actions">
+                            <button class="btn btn-success" onclick="enrollCourse('${lang.code}', 'Complete Language Program', ${priceInfo.price})">
+                                <i class="fas fa-shopping-cart"></i> Go to Enrollment Page
+                            </button>
+                        </div>
+                    `;
+                    
+                    card.style.animationDelay = `${cardsAdded * 0.1}s`;
+                    card.style.opacity = '0';
+                    card.style.animation = 'fadeIn 0.6s ease-out forwards';
+                    
+                    gridContainer.appendChild(card);
+                    cardsAdded++;
+                });
+            });
+        }
+
+        // Filter pricing by language
+        function filterPricing(languageCode) {
+            renderPricingCards(languageCode);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Login form - modified to redirect to enroll
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showNotification('No login required! You can enroll directly.', 'info');
+                    closeLoginModal();
+                    
+                    // Redirect to enroll page
+                    setTimeout(() => {
+                        window.location.href = 'enroll.html';
+                    }, 2000);
+                });
+            }
+            
+            // Payment form - modified to redirect to enroll
+            const paymentForm = document.getElementById('paymentForm');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    goToEnrollPage();
+                });
+            }
+            
+            // Close modals when clicking outside
+            [document.getElementById('loginModal'), 
+             document.getElementById('paymentModal'),
+             document.getElementById('receiptModal'),
+             document.getElementById('languageModal')].forEach(modal => {
+                if (modal) {
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === this) {
+                            if (modal.id === 'loginModal') closeLoginModal();
+                            if (modal.id === 'paymentModal') closePaymentModal();
+                            if (modal.id === 'receiptModal') closeReceiptModal();
+                            if (modal.id === 'languageModal') closeLanguageModal();
+                        }
+                    });
+                }
+            });
+            
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeLoginModal();
+                    closePaymentModal();
+                    closeReceiptModal();
+                    closeLanguageModal();
+                }
+            });
+        }
+
+        // Setup payment method toggle
+        function setupPaymentMethodToggle() {
+            const paymentMethods = document.querySelectorAll('input[name="paymentMethod"]');
+            const creditCardFields = document.getElementById('creditCardFields');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('change', function() {
+                    if (this.value === 'credit') {
+                        creditCardFields.style.display = 'block';
+                    } else {
+                        creditCardFields.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Show login modal - modified to redirect to enroll
+        function showLoginModal() {
+            // Instead of showing login modal, redirect to enroll
+            showNotification('Direct enrollment enabled! No login required.', 'info');
+            window.location.href = 'enroll.html';
+        }
+
+        // Close login modal with animation
+        function closeLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.classList.add('closing');
+            
+            setTimeout(() => {
+                modal.classList.remove('active', 'closing');
+                document.body.style.overflow = 'auto';
+            }, 400);
+        }
+
+        // Show payment modal
+        function showPaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close payment modal
+        function closePaymentModal() {
+            const modal = document.getElementById('paymentModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Show receipt modal
+        function showReceiptModal() {
+            const modal = document.getElementById('receiptModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close receipt modal
+        function closeReceiptModal() {
+            const modal = document.getElementById('receiptModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Enroll in a course
+        function enrollCourse(languageCode, level, price) {
+            // Find the language data
+            const language = languages.find(l => l.code === languageCode);
+            if (!language) return;
+            
+            // Store the selected course data for the enroll page
+            const courseData = {
+                language: {
+                    code: languageCode,
+                    name: language.name,
+                    icon: language.icon
+                },
+                level: level,
+                price: price,
+                direct: true // Flag to indicate direct enrollment
+            };
+            
+            localStorage.setItem('selectedCourse', JSON.stringify(courseData));
+            
+            // Redirect to enroll page
+            window.location.href = 'enroll.html';
+        }
+
+        // Go to enroll page from payment modal
+        function goToEnrollPage() {
+            if (currentCourse) {
+                enrollCourse(currentCourse.languageCode, currentCourse.level, currentCourse.price);
+            } else {
+                window.location.href = 'enroll.html';
+            }
+        }
+
+        // Update payment summary
+        function updatePaymentSummary() {
+            if (!currentCourse) return;
+            
+            const summary = document.getElementById('paymentSummary');
+            const subtotal = currentCourse.price;
+            const tax = subtotal * 0.10; // 10% tax
+            const total = subtotal + tax;
+            
+            summary.innerHTML = `
+                <div class="summary-item">
+                    <span>Course:</span>
+                    <span>${currentCourse.language} ${currentCourse.icon}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Duration:</span>
+                    <span>${currentCourse.duration}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Certificate:</span>
+                    <span>Included</span>
+                </div>
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span>$${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="summary-item">
+                    <span>Tax (10%):</span>
+                    <span>$${tax.toFixed(2)}</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total Amount:</span>
+                    <span>$${total.toFixed(2)}</span>
+                </div>
+            `;
+            
+            // Store the calculated values
+            currentCourse.subtotal = subtotal;
+            currentCourse.tax = tax;
+            currentCourse.total = total;
+        }
+
+        // Process payment - modified to redirect to enroll
+        function processPayment() {
+            showNotification('Redirecting to enrollment page...', 'success');
+            setTimeout(() => {
+                window.location.href = 'enroll.html';
+            }, 1000);
+        }
+
+        // Generate receipt
+        function generateReceipt() {
+            const receipt = document.getElementById('receiptDetails');
+            const formData = getFormData();
+            const date = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const receiptId = 'PA-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+            
+            receipt.innerHTML = `
+                <div class="receipt-item">
+                    <span>Receipt ID:</span>
+                    <span>${receiptId}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Date:</span>
+                    <span>${date}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Student:</span>
+                    <span>${formData.fullName}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Email:</span>
+                    <span>${formData.email}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Course:</span>
+                    <span>${currentCourse.language} ${currentCourse.icon}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Duration:</span>
+                    <span>${currentCourse.duration}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Certificate:</span>
+                    <span>Included</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Subtotal:</span>
+                    <span>$${currentCourse.subtotal.toFixed(2)}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Tax:</span>
+                    <span>$${currentCourse.tax.toFixed(2)}</span>
+                </div>
+                <div class="receipt-item total">
+                    <span>Total Paid:</span>
+                    <span>$${currentCourse.total.toFixed(2)}</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Payment Method:</span>
+                    <span>${formData.paymentMethod === 'credit' ? 'Credit Card' : 
+                            formData.paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}</span>
+                </div>
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                    <p style="color: #666; font-size: 0.9rem; margin: 0;">
+                        <strong>Note:</strong> Your official CEFR certificate will be issued upon successful completion of the course. 
+                        Access to course materials will be available immediately in your dashboard.
+                    </p>
+                </div>
+            `;
+            
+            // Store receipt data for PDF
+            currentCourse.receiptId = receiptId;
+            currentCourse.receiptDate = date;
+            currentCourse.studentName = formData.fullName;
+            currentCourse.studentEmail = formData.email;
+            currentCourse.paymentMethod = formData.paymentMethod;
+        }
+
+        // Get form data
+        function getFormData() {
+            return {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                country: document.getElementById('country').value,
+                address: document.getElementById('address').value,
+                paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+                cardNumber: document.getElementById('cardNumber')?.value || '',
+                cardName: document.getElementById('cardName')?.value || '',
+                expiry: document.getElementById('expiry')?.value || '',
+                cvv: document.getElementById('cvv')?.value || ''
+            };
+        }
+
+        // Save course to user profile
+        function saveCourseToProfile() {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            user.courses = user.courses || [];
+            user.courses.push({
+                id: Date.now(),
+                language: currentCourse.language,
+                languageCode: currentCourse.languageCode,
+                level: currentCourse.level,
+                enrolledDate: new Date().toISOString(),
+                progress: 0,
+                certificate: false
+            });
+            
+            localStorage.setItem('polyglotUser', JSON.stringify(user));
+        }
+
+        // Download receipt as PDF
+        function downloadReceipt() {
+            showLoading('Generating PDF receipt...');
+            
+            // Create PDF content
+            const pdfContent = document.getElementById('pdfReceipt');
+            pdfContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 style="color: #1A365D; margin-bottom: 10px;">LINGUASPHERE ACADEMY</h1>
+                    <p style="color: #666; margin-bottom: 5px;">Professional Language Certification</p>
+                    <p style="color: #666;">123 Language Street, Global City</p>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h2 style="color: #1A365D; border-bottom: 2px solid #1A365D; padding-bottom: 10px;">PAYMENT RECEIPT</h2>
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <div>
+                            <p><strong>Receipt ID:</strong> ${currentCourse.receiptId}</p>
+                            <p><strong>Date:</strong> ${currentCourse.receiptDate}</p>
+                        </div>
+                        <div>
+                            <p><strong>Student ID:</strong> ${currentCourse.studentEmail.split('@')[0].toUpperCase()}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1A365D; margin-bottom: 15px;">Student Information</h3>
+                    <p><strong>Name:</strong> ${currentCourse.studentName}</p>
+                    <p><strong>Email:</strong> ${currentCourse.studentEmail}</p>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1A365D; margin-bottom: 15px;">Course Details</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f8f9fa;">
+                                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Description</th>
+                                <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">
+                                    ${currentCourse.language} - Complete Language Program<br>
+                                    <small>${currentCourse.duration} Course with CEFR Certificate</small>
+                                </td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">$${currentCourse.subtotal.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border: 1px solid #ddd;">Tax (10%)</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">$${currentCourse.tax.toFixed(2)}</td>
+                            </tr>
+                            <tr style="font-weight: bold; background: #f8f9fa;">
+                                <td style="padding: 10px; border: 1px solid #ddd;">Total</td>
+                                <td style="padding: 10px; border: 1px solid #ddd;">$${currentCourse.total.toFixed(2)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1A365D; margin-bottom: 15px;">Payment Information</h3>
+                    <p><strong>Payment Method:</strong> ${currentCourse.paymentMethod === 'credit' ? 'Credit Card' : 
+                        currentCourse.paymentMethod === 'paypal' ? 'PayPal' : 'Bank Transfer'}</p>
+                    <p><strong>Payment Date:</strong> ${currentCourse.receiptDate}</p>
+                    <p><strong>Status:</strong> <span style="color: #10B981;">Paid</span></p>
+                </div>
+                
+                <div style="margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                    <h4 style="color: #1A365D; margin-bottom: 10px;">Important Notes:</h4>
+                    <ul style="color: #666; margin: 0; padding-left: 20px;">
+                        <li>This receipt confirms your enrollment in the course.</li>
+                        <li>Access to course materials is available immediately in your dashboard.</li>
+                        <li>The official CEFR certificate will be issued upon successful course completion.</li>
+                        <li>For any questions, contact support@linguasphereacademy.com</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 50px; text-align: center; color: #666; font-size: 0.9rem;">
+                    <p>Thank you for choosing LINGUASPHERE ACADEMY!</p>
+                    <p>www.linguasphereacademy.com | support@linguasphereacademy.com | +1 (555) 123-4567</p>
+                </div>
+            `;
+            
+            // Generate PDF using html2canvas and jsPDF
+            setTimeout(() => {
+                html2canvas(pdfContent).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const imgWidth = 210;
+                    const pageHeight = 297;
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    let heightLeft = imgHeight;
+                    let position = 0;
+                    
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                    
+                    while (heightLeft >= 0) {
+                        position = heightLeft - imgHeight;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pageHeight;
+                    }
+                    
+                    pdf.save(`LINGUASPHERE_Receipt_${currentCourse.receiptId}.pdf`);
+                    hideLoading();
+                    showNotification('Receipt downloaded successfully!', 'success');
+                });
+            }, 500);
+        }
+
+        // Go to dashboard after payment
+        function goToDashboardAfterPayment() {
+            closeReceiptModal();
+            showNotification('Redirecting to dashboard...', 'success');
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        function handleLogin() {
+            // Instead of login, redirect to enroll page
+            showNotification('Direct enrollment enabled! No login required.', 'success');
+            setTimeout(() => {
+                window.location.href = 'enroll.html';
+            }, 1500);
+        }
+
+        // Show dashboard function
+        function showDashboard() {
+            // For guest users, show notification and redirect to enroll
+            showNotification('Please enroll in a course first to access the dashboard.', 'info');
+            
+            // Optionally, you can redirect to enroll page
+            setTimeout(() => {
+                window.location.href = 'enroll.html';
+            }, 2000);
+        }
+
+        // Select language
+        function selectLanguage(language) {
+            showLanguageDetails(language);
+        }
+
+        // Scroll to pricing
+        function scrollToPricing() {
+            document.getElementById('pricing').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            // Update active nav
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.querySelector('nav a[href="#pricing"]').classList.add('active');
+        }
+
+        // Show help choosing function
+        function showHelpChoosing() {
+            showNotification('Our language advisors are ready to help! Contact us at info@linguasphereacademy.com or call +1 (555) 123-4567 for personalized guidance.', 'info');
+        }
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Loading functions
+        function showLoading(message = 'Loading...') {
+            const loadingText = document.getElementById('loadingText');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            if (loadingText) loadingText.textContent = message;
+            if (loadingOverlay) loadingOverlay.classList.add('active');
+        }
+
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.remove('active');
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 
+                                 type === 'error' ? 'exclamation-circle' : 
+                                 type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        // Show signup modal (placeholder)
+        function showSignupModal() {
+            showNotification('Sign up feature coming soon! Use Demo login for now.', 'info');
+        }
+    </script>
+</body>
+</html>
